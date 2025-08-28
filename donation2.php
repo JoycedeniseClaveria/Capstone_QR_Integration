@@ -1,0 +1,207 @@
+<?php   
+session_start();
+include 'connection.php'; // adjust path to your db connection
+include 'dashboardV1.php';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Donation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=ASxIQN4v9ErJJfQJ0yOH327F9lnCzRe_yHU3ZbJtVEM7IgwIVicDjpgp05Y4GcF8uIkZhgdbuxmcWu0D&currency=PHP"></script>
+    
+    <!-- jsPDF for PDF download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .donation-card {
+            max-width: 700px;
+            margin: auto;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .donation-title {
+            text-align: center;
+            color: #4e73df;
+            font-weight: bold;
+        }
+        #paypal-button-container {
+            margin-top: 15px;
+        }
+        .textarea.form-control {
+            width: 100%;
+            resize: none; /* optional: prevents resizing */
+        }
+        input.form-control[type="text"] {
+          width: 100% !important;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="donation-card">
+            <h2 class="donation-title mb-4">Give Hope. Save Paws🐾</h2>
+            <div id="alert-placeholder"></div>
+
+            <form id="donation-form" novalidate>
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+
+                <div class="mb-3">
+                    <label for="donor_name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="donor_name" name="donor_name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="donor_email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="donor_email" name="donor_email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount (PHP)</label>
+                    <input type="number" step="0.01" min="1" class="form-control" id="amount" name="amount" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="donation_date" class="form-label">Donation Date</label>
+                    <input type="date" class="form-control" id="donation_date" name="donation_date" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Payment Method</label>
+                    <div id="paypal-button-container"></div>
+                </div>
+
+                <a href="dashboardV2.php" class="btn btn-secondary mt-3">Back</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    function showAlert(message, type) {
+        document.getElementById('alert-placeholder').innerHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+    }
+
+    function validateForm() {
+        let form = document.getElementById('donation-form');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return false;
+        }
+        return true;
+    }
+
+    paypal.Buttons({
+        style: {
+            shape: 'rect',
+            color: 'gold',
+            layout: 'vertical',
+            label: 'donate'
+        },
+        createOrder: function(data, actions) {
+            if (!validateForm()) {
+                showAlert("Please fill in all required fields before proceeding.", "danger");
+                return;
+            }
+
+            let name = document.getElementById('donor_name').value.trim();
+            let email = document.getElementById('donor_email').value.trim();
+            let amount = document.getElementById('amount').value;
+
+            return actions.order.create({
+                purchase_units: [{
+                    description: "Donation from " + name + " (" + email + ")",
+                    amount: {
+                        currency_code: "PHP",
+                        value: amount
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                let donorData = {
+                    name: document.getElementById('donor_name').value,
+                    email: document.getElementById('donor_email').value,
+                    amount: document.getElementById('amount').value,
+                    donation_date: document.getElementById('donation_date').value,
+                    message: document.getElementById('message').value,
+                    transaction_id: details.id
+                };
+
+                fetch("save_donation.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(donorData)
+                })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.success) {
+                        // Generate PDF receipt
+                        const { jsPDF } = window.jspdf;
+                        const doc = new jsPDF();
+
+                        doc.setFontSize(18);
+                        doc.text("Donation Receipt", 14, 20);
+
+                        doc.setFontSize(12);
+                        doc.text(`Donor Name: ${donorData.name}`, 14, 35);
+                        doc.text(`Email: ${donorData.email}`, 14, 45);
+                        doc.text(`Amount: PHP ${donorData.amount}`, 14, 55);
+                        doc.text(`Date: ${donorData.donation_date || new Date().toLocaleDateString()}`, 14, 65);
+                        doc.text(`Transaction ID: ${donorData.transaction_id}`, 14, 75);
+                        doc.text(`Message: ${donorData.message}`, 14, 85);
+
+                        doc.text("Thank you for your generosity!", 14, 105);
+
+                        doc.save(`Donation_Receipt_${donorData.transaction_id}.pdf`);
+
+                        document.getElementById('alert-placeholder').innerHTML = `
+                            <div class="alert alert-success mt-4" role="alert">
+                                Donation successful! Your receipt has been downloaded.
+                            </div>
+                        `;
+                        document.getElementById('donation-form').reset();
+                    } else {
+                        showAlert("Donation processed but failed to save in database.", "warning");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showAlert("Error saving donation to database.", "danger");
+                });
+            });
+        },
+        onError: function(err) {
+            console.error(err);
+            showAlert("An error occurred during payment. Please try again.", "danger");
+        }
+    }).render('#paypal-button-container');
+    </script>
+</body>
+</html>

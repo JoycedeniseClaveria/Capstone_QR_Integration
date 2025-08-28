@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Secaspi</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+      <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+.footer-map iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 15px; /* makes the map corners rounded */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* optional shadow for nicer look */
+  }
+
+
+@media (max-width: 991.98px) {
+    /* Fixed hamburger */
+    #menuToggle {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 1100;
+        background-color: white;
+        border: none;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Right-side collapsible menu */
+    .custom-collapse {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 52%;
+        width: 30%;
+        background-color: white;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        padding-top: 80px;
+         overflow: hidden;
+      
+    }
+
+    .custom-collapse .navbar-nav {
+        flex-direction: column;
+    }
+
+    .collapse:not(.show) {
+        display: none;
+    }
+
+    .custom-collapse .btn {
+        text-align: center;
+        width: 80%;
+         height: 35px !important;
+        font-size: 1.1rem;
+        display: flex;  
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+    
+}
+
+
+.login-btn{
+    width: auto;
+        margin-left: 20px;
+        padding: 10px 10px;
+        border-radius: 6px;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 3 10px 50px rgba(0, 0, 0, 0.877);
+}
+  
+.footer-map iframe {
+    width: 100%;
+    height: 350px; /* Default height for desktop */
+    border: 0;
+}
+
+
+/* Adjust height for mobile */
+@media (max-width: 576px) {
+    .footer-map iframe {
+        height: 350px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .custom-collapse {
+        height: auto;          
+        width:50%;
+        overflow: hidden;  
+        padding-top: 80px;    
+        padding-bottom: 15px;  
+    }
+
+    .custom-collapse .navbar-nav .nav-link {
+        padding: 6px 0;  
+        margin: 2px 0;
+    }
+
+    .custom-collapse .login-btn {
+    display: flex;                /* gawin flex container */
+    align-items: center;          /* vertical center */
+    justify-content: center;      /* horizontal center */
+    margin: 10px auto 0 auto;
+    width: 80%;
+    height: 40px !important;
+    font-size: 1rem;
+    padding: 0 !important;        /* alisin py-4 px-lg-4 effect */
+}
+}
+
+</style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <img style="height: 60px; width: auto;" src="img/logo-modified (1).png" alt="Image">
+        <span class="ms-2 fw-bold" style="color: #492d23; font-size: 1.2rem;">
+            SECASPI
+        </span>
+    </a>
+
+    <!-- Always-visible Hamburger -->
+    <button id="menuToggle" type="button" class="navbar-toggler me-4">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Menu -->
+    <div class="collapse navbar-collapse custom-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="index.html" class="nav-item nav-link active" style="color: #492d23;">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="about.html" class="nav-item nav-link" style="color: #492d23;">
+                <i class="fas fa-paw"></i> About
+            </a>
+            <a href="service.html" class="nav-item nav-link" style="color: #492d23;">
+                <i class="fas fa-hand-holding-heart"></i> Services
+            </a>
+            <a href="project.html" class="nav-item nav-link" style="color: #492d23;">
+                <i class="fas fa-project-diagram"></i> Projects
+            </a>
+            <a href="viewpet.html" class="nav-item nav-link" style="color: #492d23;">
+                <i class="fas fa-dog"></i> Find a Pet
+            </a>
+        </div>
+        <a href="login.php" class="btn btn-primary login-btn py-4 px-lg-4 rounded-2 text-center">
+            <i class="fas fa-user-circle "></i> Login
+        </a>
+    </div>
+</nav>
+    <!-- Navbar End -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-5">
+            <h1 class="display-3 text-white mb-4 animated slideInDown">Projects</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Projects Start -->
+ <div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-bold text-primary">Our Projects</p>
+            <h1 class="display-5 mb-5">Some Of Our Wonderful Projects</h1>
+        </div>
+      
+        <div class="row g-4 portfolio-container">
+            <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
+                <div class="portfolio-inner rounded">
+                    <img class="img-fluid" src="img/neuter1.jpg" alt="neuter1">
+                    <div class="portfolio-text">
+                        <h4 class="text-white mb-4">Spay and Neuter</h4>
+                        <div class="d-flex">
+                            <a class="btn btn-lg-square btn-light rounded-circle mx-2" 
+                               href="img/neuter1.jpg" data-lightbox="portfolio">
+                               <i class="fa fa-eye text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.3s">
+                <div class="portfolio-inner rounded">
+                    <img class="img-fluid" src="img/feeding.jpg" alt="feeding">
+                    <div class="portfolio-text">
+                        <h4 class="text-white mb-4">Stray Animals Feeding Program</h4>
+                        <div class="d-flex">
+                            <a class="btn btn-lg-square btn-light rounded-circle mx-2" 
+                               href="img/feeding.jpg" data-lightbox="portfolio">
+                               <i class="fa fa-eye text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.5s">
+                <div class="portfolio-inner rounded">
+                    <img class="img-fluid" src="img/vaccine.jpg" alt="vaccine">
+                    <div class="portfolio-text">
+                        <h4 class="text-white mb-4">Free Vaccinations</h4>
+                        <div class="d-flex">
+                            <a class="btn btn-lg-square btn-light rounded-circle mx-2" 
+                               href="img/vaccine.jpg" data-lightbox="portfolio">
+                               <i class="fa fa-eye text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.1s">
+                <div class="portfolio-inner rounded">
+                    <img class="img-fluid" src="img/community_pic.jpg" alt="community">
+                    <div class="portfolio-text">
+                        <h4 class="text-white mb-4">Community Engagement</h4>
+                        <div class="d-flex">
+                            <a class="btn btn-lg-square btn-light rounded-circle mx-2" 
+                               href="img/community_pic.jpg" data-lightbox="portfolio">
+                               <i class="fa fa-eye text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.3s">
+                <div class="portfolio-inner rounded">
+                    <img class="img-fluid" src="img/donation.jpg" alt="donation">
+                    <div class="portfolio-text">
+                        <h4 class="text-white mb-4">Donation Drive</h4>
+                        <div class="d-flex">
+                            <a class="btn btn-lg-square btn-light rounded-circle mx-2" 
+                               href="img/donation.jpg" data-lightbox="portfolio">
+                               <i class="fa fa-eye text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.5s">
+                <div class="portfolio-inner rounded">
+                    <img class="img-fluid" src="img/merchandise1.jpg" alt="">
+                    <div class="portfolio-text">
+                        <h4 class="text-white mb-4">Shelter Merchandise</h4>
+                        <div class="d-flex">
+                            <a class="btn btn-lg-square btn-light rounded-circle mx-2" 
+                               href="img/merchandise1.jpg" data-lightbox="portfolio">
+                               <i class="fa fa-eye text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Projects End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/parallax/parallax.min.js"></script>
+    <script src="lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+     <script>
+document.getElementById("menuToggle").addEventListener("click", function () {
+    document.getElementById("navbarCollapse").classList.toggle("show");
+});
+</script>
+<footer>
+  <div class="container-fluid text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s" style="background-color: #9e5f4a;">
+    <div class="container py-5">
+      <div class="row g-5">
+        
+        <!-- Left: contact / location info -->
+        <div class="col-lg-6 col-md-6">
+          <h4 class="text-white mb-4">Our Location</h4>
+          <p class="mb-1"><i class="fa fa-map-marker-alt me-3"></i>#428 Purok 7, Tibagan Road Majada, Calamba, Laguna</p>
+          <p class="mb-1"><i class="fa fa-phone-alt me-3"></i>(0945) 290-8876</p>
+          <p class="mb-1"><i class="fa fa-envelope me-3"></i>secaspi.socmed@gmail.com</p>
+          <div class="d-flex pt-2">
+            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
+            <a class="btn btn-square btn-outline-light rounded-circle me-2" href="https://www.facebook.com/SecondChanceAspinShelterPhilippines/"><i class="fab fa-facebook-f"></i></a>
+            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
+            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+
+        <!-- Right: embedded map -->
+        <div class="col-lg-6 col-md-6">
+          <h4 class="text-white mb-4">Find Us</h4>
+          <div class="footer-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3868.074104644799!2d121.09248297494102!3d14.190437886248782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd63bf9006e371%3A0x4fb03f5ad32d6acd!2sSECASPI%20(Second%20Chance%20Aspin%20Shelter%20Philippines)!5e0!3m2!1sen!2sph!4v1714310315607!5m2!1sen!2sph"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              aria-label="Map to SECASPI (Second Chance Aspin Shelter Philippines)"
+            ></iframe>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="container-fluid copyright py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+          &copy; <a class="border-bottom" href="#">SECASPI CANLUBANG 2025</a>, All Rights Reserved.
+        </div>
+        <div class="col-md-6 text-center text-md-end"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
